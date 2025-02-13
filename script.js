@@ -1,14 +1,16 @@
 // لیست مقالات
 const posts = [
-    { title: "پردازنده (CPU) چیست؟", content: "پردازنده یا CPU مغز اصلی کامپیوتر است...", category: "cpu" },
-    { title: "کارت گرافیک (GPU) چه کاربردی دارد؟", content: "کارت گرافیک برای پردازش تصاویر و بازی‌ها استفاده می‌شود...", category: "gpu" },
-    { title: "حافظه رم (RAM) چیست و چرا مهم است؟", content: "رم یکی از عوامل اصلی در سرعت اجرای برنامه‌ها است...", category: "ram" }
+    { title: "پردازنده (CPU) چیست؟", content: "CPU مغز کامپیوتر است که پردازش اصلی داده‌ها را انجام می‌دهد...", category: "cpu" },
+    { title: "چطور یک کارت گرافیک (GPU) مناسب انتخاب کنیم؟", content: "کارت گرافیک برای پردازش تصاویر و بازی‌ها استفاده می‌شود...", category: "gpu" },
+    { title: "حافظه رم (RAM) چقدر مهم است؟", content: "رم یکی از عوامل اصلی سرعت پردازش است و بین 8 تا 32 گیگابایت توصیه می‌شود...", category: "ram" },
+    { title: "تفاوت SSD و HDD چیست؟", content: "SSD سرعت بالاتر و مصرف انرژی کمتر دارد، درحالی‌که HDD ارزان‌تر و ظرفیت بیشتری دارد...", category: "storage" },
+    { title: "مادربرد (Motherboard) چه نقشی دارد؟", content: "مادربرد قطعات مختلف را به هم متصل می‌کند و بستگی به پردازنده و رم دارد...", category: "motherboard" }
 ];
 
 // نمایش مقالات در صفحه
 function displayPosts(filteredPosts) {
     const postsContainer = document.getElementById("posts");
-    postsContainer.innerHTML = ""; // پاک کردن محتوای قبلی
+    postsContainer.innerHTML = ""; 
 
     filteredPosts.forEach(post => {
         const postDiv = document.createElement("div");
@@ -18,7 +20,7 @@ function displayPosts(filteredPosts) {
     });
 }
 
-// فیلتر کردن مقالات بر اساس دسته‌بندی
+// فیلتر مقالات بر اساس دسته‌بندی
 function filterPosts(category) {
     if (category === "all") {
         displayPosts(posts);
@@ -31,7 +33,10 @@ function filterPosts(category) {
 // جستجو در مقالات
 function searchPosts() {
     const searchText = document.getElementById("search").value.toLowerCase();
-    const filtered = posts.filter(post => post.title.toLowerCase().includes(searchText) || post.content.toLowerCase().includes(searchText));
+    const filtered = posts.filter(post => 
+        post.title.toLowerCase().includes(searchText) || 
+        post.content.toLowerCase().includes(searchText)
+    );
     displayPosts(filtered);
 }
 
