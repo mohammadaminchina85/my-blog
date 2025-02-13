@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وبلاگ قطعات کامپیوتر</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>وبلاگ قطعات کامپیوتر</h1>
+        <input type="text" id="search" placeholder="جستجو در مقالات..." onkeyup="searchPosts()">
+    </header>
+
+    <nav>
+        <a href="#" onclick="filterPosts('all')">همه مقالات</a>
+        <a href="#" onclick="filterPosts('cpu')">پردازنده (CPU)</a>
+        <a href="#" onclick="filterPosts('gpu')">کارت گرافیک (GPU)</a>
+        <a href="#" onclick="filterPosts('ram')">رم (RAM)</a>
+    </nav>
+
+    <div class="container" id="posts">
+        <!-- مقالات به‌صورت داینامیک از جاوا اسکریپت اضافه می‌شوند -->
+    </div>
+
+    <footer>
+        <p>تمامی حقوق محفوظ است - وبلاگ قطعات کامپیوتر</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
