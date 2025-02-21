@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let count = 0;
 
         posts.forEach(post => {
+            post.innerHTML = post.textContent; // حذف هایلایت‌های قبلی
             let text = post.textContent.toLowerCase();
             if (text.includes(searchTerm)) {
                 post.classList.remove("hidden");
@@ -71,4 +72,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         post.appendChild(favBtn);
     });
+
+    // بازگردانی مقالات
+    let articlesContainer = document.getElementById("posts");
+    articlesContainer.innerHTML = `
+        <div class="post" data-category="cpu">
+            <h2>راهنمای خرید پردازنده</h2>
+            <p>در این مقاله به بررسی بهترین پردازنده‌ها می‌پردازیم...</p>
+        </div>
+        <div class="post" data-category="gpu">
+            <h2>مقایسه کارت‌های گرافیک</h2>
+            <p>در این مقاله کارت‌های گرافیک محبوب مقایسه شده‌اند...</p>
+        </div>
+        <div class="post" data-category="ram">
+            <h2>اهمیت حافظه رم</h2>
+            <p>چگونه انتخاب رم مناسب باعث افزایش کارایی سیستم می‌شود؟</p>
+        </div>
+    `;
 });
