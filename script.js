@@ -1,92 +1,97 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let searchInput = document.getElementById("search");
-    let posts = document.querySelectorAll(".post");
-    let resultCount = document.createElement("p");
-    resultCount.id = "resultCount";
-    searchInput.parentElement.appendChild(resultCount);
+    const postsContainer = document.getElementById("posts");
+    const searchInput = document.getElementById("search");
+    const authSection = document.getElementById("auth");
+    const loginForm = document.getElementById("loginForm");
+    const signupButton = document.getElementById("signup");
 
-    // بارگذاری جستجو و فیلتر قبلی از localStorage
-    let savedSearch = localStorage.getItem("searchTerm");
-    if (savedSearch) {
-        searchInput.value = savedSearch;
-        searchPosts();
+    let posts = [];
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    // بارگذاری مقالات از API
+    async function loadPosts() {
+        const response = await fetch('https://example.com/api/posts');
+        posts = await response.json();
+        displayPosts(posts);
     }
 
-    function searchPosts() {
-        let searchTerm = searchInput.value.toLowerCase();
-        localStorage.setItem("searchTerm", searchTerm);
-        let count = 0;
+    // نمایش مقالات
+    function displayPosts(posts) {
+        postsContainer.innerHTML = posts.map(post => `
+            <div class="post" data-category="${post.category}">
+                <h2>${post.title}</h2>
+                <p>${post.content}</p>
+                <div class="rating">
+                    ${Array.from({ length: 5 }, (_, i) => `<span data-value="${i + 1}">★</span>`).join('')}
+                </div>
+                <div class="comments">
+                    <h3>نظرات</h3>
+                    <form class="commentForm">
+                        <textarea placeholder="نظر خود را بنویسید..."></textarea>
+                        <button type="submit">ارسال نظر</button>
+                    </form>
+                    <div class="commentList"></div>
+                </div>
+                <button class="favorite-btn">❤️</button>
+            </div>
+        `).join('');
 
-        posts.forEach(post => {
-            post.innerHTML = post.textContent; // حذف هایلایت‌های قبلی
-            let text = post.textContent.toLowerCase();
-            if (text.includes(searchTerm)) {
-                post.classList.remove("hidden");
-                highlightText(post, searchTerm);
-                count++;
-            } else {
-                post.classList.add("hidden");
-            }
+        // افزودن رویداد به دکمه‌های علاقه‌مندی
+        document.querySelectorAll('.favorite-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => addToFavorites(posts[index].title));
         });
 
-        resultCount.textContent = `${count} مقاله یافت شد`;
-    }
-    
-    searchInput.addEventListener("keyup", searchPosts);
+        // افزودن رویداد به سیستم امتیازدهی
+        document.querySelectorAll('.rating').forEach(rating => {
+            rating.addEventListener('click', (e) => {
+                if (e.target.tagName === 'SPAN') {
+                    const value = e.target.getAttribute('data-value');
+                    alert(`شما به این مقاله ${value} ستاره دادید!`);
+                }
+            });
+        });
 
-    function filterPosts(category) {
-        localStorage.setItem("selectedCategory", category);
-        posts.forEach(post => {
-            if (category === "all" || post.dataset.category === category) {
-                post.classList.remove("hidden");
-            } else {
-                post.classList.add("hidden");
-            }
+        // افزودن رویداد به فرم‌های نظر
+        document.querySelectorAll('.commentForm').forEach(form => {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const comment = e.target.querySelector('textarea').value;
+                const commentList = e.target.nextElementSibling;
+                commentList.innerHTML += `<p>${comment}</p>`;
+                e.target.reset();
+            });
         });
     }
 
-    function highlightText(element, searchTerm) {
-        let regex = new RegExp(`(${searchTerm})`, "gi");
-        element.innerHTML = element.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+    // افزودن به علاقه‌مندی‌ها
+    function addToFavorites(title) {
+        if (!favorites.includes(title)) {
+            favorites.push(title);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            alert("به علاقه‌مندی‌ها اضافه شد!");
+        }
     }
 
-    // بارگذاری دسته‌بندی قبلی از localStorage
-    let savedCategory = localStorage.getItem("selectedCategory");
-    if (savedCategory) {
-        filterPosts(savedCategory);
-    }
-
-    // اضافه کردن دکمه علاقه‌مندی
-    posts.forEach(post => {
-        let favBtn = document.createElement("button");
-        favBtn.textContent = "❤️";
-        favBtn.classList.add("favorite-btn");
-        favBtn.addEventListener("click", function () {
-            let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-            let postTitle = post.querySelector("h2").textContent;
-            if (!favorites.includes(postTitle)) {
-                favorites.push(postTitle);
-                localStorage.setItem("favorites", JSON.stringify(favorites));
-                alert("به علاقه‌مندی‌ها اضافه شد!");
-            }
-        });
-        post.appendChild(favBtn);
+    // جستجوی پیشرفته
+    const fuse = new Fuse(posts, { keys: ['title', 'content', 'category'] });
+    searchInput.addEventListener('keyup', () => {
+        const term = searchInput.value;
+        const results = fuse.search(term);
+        displayPosts(results.map(result => result.item));
     });
 
-    // بازگردانی مقالات
-    let articlesContainer = document.getElementById("posts");
-    articlesContainer.innerHTML = `
-        <div class="post" data-category="cpu">
-            <h2>راهنمای خرید پردازنده</h2>
-            <p>در این مقاله به بررسی بهترین پردازنده‌ها می‌پردازیم...</p>
-        </div>
-        <div class="post" data-category="gpu">
-            <h2>مقایسه کارت‌های گرافیک</h2>
-            <p>در این مقاله کارت‌های گرافیک محبوب مقایسه شده‌اند...</p>
-        </div>
-        <div class="post" data-category="ram">
-            <h2>اهمیت حافظه رم</h2>
-            <p>چگونه انتخاب رم مناسب باعث افزایش کارایی سیستم می‌شود؟</p>
-        </div>
-    `;
+    // سیستم احراز هویت
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = e.target.querySelector('input[type="email"]').value;
+        const password = e.target.querySelector('input[type="password"]').value;
+        alert(`ورود با ایمیل ${email} انجام شد!`);
+    });
+
+    signupButton.addEventListener('click', () => {
+        alert('ثبت‌نام انجام شد!');
+    });
+
+    // بارگذاری اولیه مقالات
+    loadPosts();
 });

@@ -1,16 +1,28 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>وبلاگ قطعات کامپیوتر</title>
+    <meta name="description" content="وبلاگ تخصصی درباره قطعات کامپیوتر و راهنمای خرید آن‌ها">
+    <meta name="keywords" content="قطعات کامپیوتر, پردازنده, کارت گرافیک, رم, حافظه">
+    <meta property="og:title" content="وبلاگ قطعات کامپیوتر">
+    <meta property="og:description" content="بررسی و مقایسه قطعات کامپیوتر">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <h1>💻 دنیای قطعات کامپیوتر</h1>
+        <h1 id="title">💻 دنیای قطعات کامپیوتر</h1>
         <input type="text" id="search" placeholder="🔍 جستجو در مقالات..." onkeyup="searchPosts()">
+        <div id="auth">
+            <form id="loginForm">
+                <input type="email" placeholder="ایمیل" required>
+                <input type="password" placeholder="رمز عبور" required>
+                <button type="submit">ورود</button>
+            </form>
+            <button id="signup">ثبت‌نام</button>
+        </div>
     </header>
 
     <nav>
@@ -26,11 +38,18 @@
         <!-- مقالات اینجا نمایش داده می‌شوند -->
     </div>
 
-<footer>
-    <p>© 2025 | طراحی و نگارش توسط <strong>محمد امین چینا</strong></p>
-    <p>ایمیل برای ارتباط: <a href="mailto:mohammadamin.china@gmail.com">mohammadamin.china@gmail.com</a></p>
-</footer>
+    <footer>
+        <p>© 2025 | طراحی و نگارش توسط <strong>محمد امین چینا</strong></p>
+        <p>ایمیل برای ارتباط: <a href="mailto:mohammadamin.china@gmail.com">mohammadamin.china@gmail.com</a></p>
+        <div class="share-buttons">
+            <a href="#" class="share-facebook">فیسبوک</a>
+            <a href="#" class="share-twitter">توییتر</a>
+            <a href="#" class="share-linkedin">لینکدین</a>
+        </div>
+    </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/i18next@21.6.10/i18next.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
     <script src="script.js"></script>
 </body>
 </html>
