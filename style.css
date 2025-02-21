@@ -1,22 +1,18 @@
-/* استایل کلی */
 body {
-    font-family: 'IRANSans', Arial, sans-serif;
+    font-family: Tahoma, Arial, sans-serif;
     direction: rtl;
-    background-color: #121212;
-    color: #E0E0E0;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
-    transition: background 0.3s ease-in-out;
 }
 
 /* هدر */
 header {
-    background: linear-gradient(45deg, #4CAF50, #2E7D32);
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
     color: white;
     text-align: center;
     padding: 20px;
     font-size: 24px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* فیلد جستجو */
@@ -29,36 +25,31 @@ header {
     font-size: 16px;
     text-align: center;
     max-width: 500px;
-    background: #2E7D32;
-    color: white;
-    outline: none;
 }
 
 /* نوار ناوبری */
 nav {
-    background: #1E1E1E;
+    background: #444;
     text-align: center;
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 nav a {
-    color: #A5D6A7;
+    color: white;
     text-decoration: none;
     margin: 5px;
     font-size: 16px;
     padding: 10px 15px;
     border-radius: 5px;
-    transition: all 0.3s ease;
+    transition: 0.3s;
     display: inline-block;
 }
 
 nav a:hover {
-    background: #388E3C;
-    color: white;
+    background: #6a11cb;
 }
 
 /* کانتینر مقالات */
@@ -66,69 +57,39 @@ nav a:hover {
     width: 90%;
     max-width: 800px;
     margin: auto;
-    background: #1E1E1E;
+    background: white;
     padding: 20px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     margin-top: 20px;
-    transition: transform 0.3s;
-}
-
-.container:hover {
-    transform: scale(1.01);
 }
 
 /* استایل مقالات */
 .post {
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #ddd;
     padding: 20px 0;
-    transition: all 0.3s;
+    transition: 0.3s;
 }
 
 .post:hover {
-    background: #263238;
+    background: #f8f9fa;
     transform: scale(1.02);
 }
 
 .post h2 {
-    color: #A5D6A7;
+    color: #2575fc;
 }
 
 /* فوتر */
 footer {
-    background: #1E1E1E;
+    background: #333;
     color: white;
     text-align: center;
     padding: 15px;
     margin-top: 20px;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
 
-/* هایلایت متن جستجو */
-.highlight {
-    background-color: #4CAF50;
-    color: black;
-    font-weight: bold;
-    padding: 2px 5px;
-    border-radius: 4px;
-}
-
-/* دکمه علاقه‌مندی */
-.favorite-btn {
-    background: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.favorite-btn:hover {
-    background: #2E7D32;
-}
-
-/* ریسپانسیو */
+/* 📌 واکنش‌گرایی برای موبایل */
 @media (max-width: 768px) {
     header {
         font-size: 20px;
@@ -136,6 +97,7 @@ footer {
     }
 
     nav {
+        display: flex;
         flex-direction: column;
     }
 
