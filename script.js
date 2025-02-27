@@ -30,7 +30,7 @@ function displayPosts() {
         postDiv.innerHTML = `
             <h2><a href="article.html?id=${post.id}">${post.title}</a></h2>
             <img src="${post.image}" alt="${post.title}" width="100%">
-            <p>${post.content.substring(0, 150)}...</p>
+            <p>${post.content.substring(0, 200)}...</p>
             <a href="article.html?id=${post.id}">ادامه مطلب</a>
         `;
 
