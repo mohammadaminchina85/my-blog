@@ -10,7 +10,7 @@ const posts = [
         - اخبار اقتصادی  
         - تصمیمات سیاسی  
         `,
-        image: "images/forex1.jpg"
+        image: "forex1.jpg"
     },
     { 
         id: 2,
@@ -23,7 +23,7 @@ const posts = [
         3. پرایس اکشن (Price Action)  
         4. تحلیل فاندامنتال  
         `,
-        image: "images/forex2.jpg"
+        image: "forex2.jpg"
     },
     { 
         id: 3,
@@ -36,7 +36,7 @@ const posts = [
         3. تنوع در معاملات  
         4. کنترل احساسات  
         `,
-        image: "images/forex3.jpg"
+        image: "forex3.jpg"
     }
 ];
 
