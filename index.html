@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وبلاگ قطعات کامپیوتر</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>💻 دنیای قطعات کامپیوتر</h1>
+        <input type="text" id="search" placeholder="🔍 جستجو در مقالات..." onkeyup="searchPosts()">
+        <button id="theme-toggle">🌙 تغییر تم</button>
+    </header>
+
+    <nav>
+        <a href="#" onclick="filterPosts('all')">🏠 همه مقالات</a>
+        <a href="#" onclick="filterPosts('cpu')">⚡ پردازنده (CPU)</a>
+        <a href="#" onclick="filterPosts('gpu')">🎮 کارت گرافیک (GPU)</a>
+        <a href="#" onclick="filterPosts('ram')">🚀 حافظه رم (RAM)</a>
+        <a href="#" onclick="filterPosts('storage')">💾 حافظه (SSD & HDD)</a>
+        <a href="#" onclick="filterPosts('motherboard')">🔧 مادربرد</a>
+    </nav>
+
+    <form id="advanced-search">
+        <input type="text" id="search-text" placeholder="جستجوی متن...">
+        <select id="search-category">
+            <option value="all">همه دسته‌بندی‌ها</option>
+            <option value="cpu">پردازنده (CPU)</option>
+            <option value="gpu">کارت گرافیک (GPU)</option>
+            <option value="ram">حافظه رم (RAM)</option>
+            <option value="storage">حافظه (SSD & HDD)</option>
+            <option value="motherboard">مادربرد</option>
+        </select>
+        <button type="submit">جستجو</button>
+    </form>
+
+    <div class="container" id="posts">
+        <!-- مقالات اینجا نمایش داده می‌شوند -->
+    </div>
+
+    <footer>
+        <p>© 2025 | طراحی و نگارش توسط <strong>محمد امین چینا</strong></p>
+        <p>ایمیل برای ارتباط: <a href="mailto:mohammadamin.china@gmail.com">mohammadamin.china@gmail.com</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Disqus comments
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://YOUR_DISQUS_SHORTNAME.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+</body>
+</html>
