@@ -1,59 +1,305 @@
-<!DOCTYPE html>
-<html lang="fa">
+<!doctype html>
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وبلاگ قطعات کامپیوتر</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فناوری‌های طراحی منبع تغذیه کامپیوتر | مستند فنی</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #eef2f5;
+    font-family: 'Segoe UI', 'Tahoma', 'Roboto', 'Noto Sans Arabic', system-ui, -apple-system, sans-serif;
+    line-height: 1.65;
+    color: #1a2c3e;
+    padding: 2rem 1rem;
+  }
+
+  /* کانتینر اصلی برای متن حرفه‌ای */
+  .document-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 28px;
+    box-shadow: 0 20px 35px -12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.02);
+    overflow: hidden;
+    transition: all 0.2s ease;
+  }
+
+  /* هدر ساده اما شیک */
+  .doc-header {
+    background: linear-gradient(135deg, #0b2b3b 0%, #144d5e 100%);
+    padding: 2rem 2.5rem;
+    border-bottom: 4px solid #ffb74d;
+  }
+
+  .doc-header h1 {
+    color: white;
+    font-size: 1.9rem;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .doc-header h1:before {
+    content: "⚡";
+    font-size: 2rem;
+    background: rgba(255,255,240,0.2);
+    width: 48px;
+    height: 48px;
+    border-radius: 60px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .doc-sub {
+    color: #cfe7ed;
+    margin-top: 12px;
+    font-size: 0.95rem;
+    border-right: 3px solid #ffb74d;
+    padding-right: 1rem;
+  }
+
+  /* محتوای اصلی با فاصله‌گذاری ایده‌آل برای مطالعه */
+  .content {
+    padding: 2.2rem 2.5rem 3rem 2.5rem;
+  }
+
+  /* هر پاراگراف به صورت بلوک مشخص */
+  p {
+    margin-bottom: 1.35rem;
+    font-size: 1rem;
+    text-align: justify;
+    text-justify: inter-word;
+    color: #1e2f3a;
+  }
+
+  /* شماره‌گذاری حرفه‌ای عناوین (متن شما شامل اعداد فارسی به صورت تیتروار است) */
+  /* این استایل باعث می‌شود اعداد پررنگ و ساختار فنی دیده شود */
+  p strong, p b {
+    color: #0f5c6e;
+    font-weight: 600;
+  }
+
+  /* تشخیص خودکار عناوین شماره‌دار مثلاً "۱. طراحی مدار" */
+  p:has(> strong:first-child), 
+  p:has(> b:first-child) {
+    margin-top: 1.8rem;
+    margin-bottom: 0.6rem;
+  }
+
+  /* بهبود شماره‌گذاری اول پاراگراف (اعداد فارسی) */
+  p:first-child {
+    margin-top: 0;
+  }
+
+  /* هر پاراگرافی که با عدد و نقطه شروع شود، شبیه تیتر می‌شود */
+  p[data-is-title="true"] {
+    font-weight: 600;
+    font-size: 1.15rem;
+    background: #f8fafc;
+    padding: 0.6rem 1rem 0.6rem 1rem;
+    border-right: 5px solid #ffb74d;
+    border-radius: 12px;
+    margin: 1.8rem 0 1.2rem 0;
+    color: #0a4052;
+  }
+
+  /* قاب برای نقل قول یا نکات فنی */
+  .tech-note {
+    background: #f0f6fa;
+    border-right: 4px solid #2c9ab3;
+    padding: 0.8rem 1.3rem;
+    margin: 1.2rem 0;
+    border-radius: 16px;
+    font-size: 0.92rem;
+    color: #1f5e6e;
+  }
+
+  /* استایل برای بخش‌های کلیدی مانند استانداردها و تست‌ها (اختیاری) */
+  .highlight-stat {
+    background: #fef7e0;
+    border-radius: 20px;
+    padding: 0.1rem 1.2rem;
+    margin: 1rem 0;
+    border: 1px solid #ffe2aa;
+  }
+
+  /* بهبود لیست‌های تعبیه شده در متن (مثل تست‌ها) */
+  p br + br {
+    display: none;
+  }
+
+  /* لینک‌ها و کلیدواژه‌ها */
+  .keyword {
+    background: #e4edf2;
+    padding: 0.1rem 0.3rem;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 0.9em;
+    color: #005f73;
+  }
+
+  /* footer ساده برای اعتبار */
+  .doc-footer {
+    border-top: 1px solid #dce7ef;
+    background: #fafcfd;
+    padding: 1rem 2.5rem;
+    font-size: 0.75rem;
+    color: #5f7f8c;
+    text-align: center;
+    direction: ltr;
+  }
+
+  /* ریسپانسیو برای موبایل */
+  @media (max-width: 700px) {
+    body {
+      padding: 1rem 0.5rem;
+    }
+    .content {
+      padding: 1.5rem;
+    }
+    .doc-header {
+      padding: 1.2rem 1.5rem;
+    }
+    .doc-header h1 {
+      font-size: 1.4rem;
+    }
+    p {
+      font-size: 0.92rem;
+    }
+  }
+
+  /* اصلاح اسکرول و readability */
+  ::selection {
+    background: #ffb74d80;
+    color: #0a2b36;
+  }
+</style>
 </head>
+
 <body>
+<div class="document-container">
+  <div class="doc-header">
+    <h1>مستند فنی طراحی پاور کامپیوتر</h1>
+	<h1>طراحی توسط محمدامین چینا<h1>
+    <div class="doc-sub">بررسی عمیق فناوری‌های مدرن، توپولوژی‌های سوئیچینگ، استانداردها و مهندسی قدرت</div>
+  </div>
+  <div class="content" id="tech-content">
+    <p><strong>۱. طراحی مدار و معماری کلی پاور کامپیوتر</strong><br>
+پاور کامپیوتر از نظر ساختار داخلی شامل چند بخش اصلی است: فیلتر ورودی، مدار تصحیح ضریب توان (PFC)، مبدل اولیه، بخش کنترل و سوئیچینگ، ترانسفورماتور ایزولاسیون، مبدل‌های ثانویه، مدارهای تثبیت ولتاژ و مدارهای محافظتی. طراحی کلی بر پایه توپولوژی‌های سوئیچینگ و تبدیل‌کننده‌های جریان متناوب به جریان مستقیم است. فناوری سوئیچینگ در مقایسه با منابع تغذیه خطی، بازده بسیار بالاتری دارد که معمولاً بین ۸۰ تا ۹۴ درصد متغیر است.</p>
 
-    <header>
-        <h1>💻 دنیای قطعات کامپیوتر</h1>
-        <input type="text" id="search" placeholder="🔍 جستجو در مقالات..." onkeyup="searchPosts()">
-        <button id="theme-toggle">🌙 تغییر تم</button>
-    </header>
+<p>در مرحله طراحی، مهندسان ابتدا مشخصات الکتریکی خروجی (مانند ۳٫۳V، ۵V، ۱۲V، و -۱۲V) را تعریف می‌کنند، سپس توپولوژی مناسب را با توجه به توان خروجی انتخاب می‌کنند. برای توان‌های کمتر از ۵۰۰ وات معمولاً توپولوژی Forward یا LLC Resonant استفاده می‌شود، در توان‌های بالاتر Half-Bridge و Full-Bridge کاربرد دارند.</p>
 
-    <nav>
-        <a href="#" onclick="filterPosts('all')">🏠 همه مقالات</a>
-        <a href="#" onclick="filterPosts('cpu')">⚡ پردازنده (CPU)</a>
-        <a href="#" onclick="filterPosts('gpu')">🎮 کارت گرافیک (GPU)</a>
-        <a href="#" onclick="filterPosts('ram')">🚀 حافظه رم (RAM)</a>
-        <a href="#" onclick="filterPosts('storage')">💾 حافظه (SSD & HDD)</a>
-        <a href="#" onclick="filterPosts('motherboard')">🔧 مادربرد</a>
-    </nav>
+<p><strong>۲. فناوری تصحیح ضریب توان (PFC)</strong><br>
+در منابع تغذیه مدرن فناوری Active PFC به‌صورت استاندارد وجود دارد. این بخش، موج جریان ورودی را هم‌فاز با ولتاژ ورودی نگه می‌دارد تا توان راکتیو کاهش یابد و راندمان بالا رود. مدار PFC شامل ترانزیستور MOSFET یا IGBT، دیود سریع، و کنترلر تخصصی مانند ICهای خانواده NCP1654 یا L6562 است.</p>
 
-    <form id="advanced-search">
-        <input type="text" id="search-text" placeholder="جستجوی متن...">
-        <select id="search-category">
-            <option value="all">همه دسته‌بندی‌ها</option>
-            <option value="cpu">پردازنده (CPU)</option>
-            <option value="gpu">کارت گرافیک (GPU)</option>
-            <option value="ram">حافظه رم (RAM)</option>
-            <option value="storage">حافظه (SSD & HDD)</option>
-            <option value="motherboard">مادربرد</option>
-        </select>
-        <button type="submit">جستجو</button>
-    </form>
+<p>در بخش طراحی مدار PFC، از حسگرهای جریان (Current Sense Resistors) برای اندازه‌گیری جریان لحظه‌ای و فیدبک حلقه بسته استفاده می‌شود. این فیدبک ورودی به IC کنترلر اجازه می‌دهد زاویه هدایت MOSFET را بر اساس شکل و دامنه ولتاژ شبکه تنظیم کند. فناوری PFC به‌صورت اکتیو باعث کاهش نویز الکترومغناطیسی (EMI) در سیستم می‌شود.</p>
 
-    <div class="container" id="posts">
-        <!-- مقالات اینجا نمایش داده می‌شوند -->
-    </div>
+<p><strong>۳. فناوری‌های کلیدزنی و نیمه‌هادی‌ها</strong><br>
+سوئیچینگ در منابع تغذیه کامپیوتر توسط ترانزیستورهای قدرت انجام می‌شود. در نسل‌های قدیمی از MOSFET‌های سیلیکونی با سرعت کلیدزنی پایین‌تر استفاده می‌شد، اما فناوری‌های جدیدتر مبتنی بر SiC (Silicon Carbide) و GaN (Gallium Nitride) هستند که قابلیت سوئیچ در فرکانس‌های بسیار بالا (تا چند مگاهرتز) را دارند و تلفات حرارتی کمتر ایجاد می‌کنند.</p>
 
-    <footer>
-        <p>© 2025 | طراحی و نگارش توسط <strong>محمد امین چینا</strong></p>
-        <p>ایمیل برای ارتباط: <a href="mailto:mohammadamin.china@gmail.com">mohammadamin.china@gmail.com</a></p>
-    </footer>
+<p>استفاده از GaN باعث کاهش اندازه ترانسفورماتور و اجزای خازنی می‌شود چون فرکانس کاری افزایش می‌یابد. در طراحی صنعتی، انتخاب بین MOSFET و GaN براساس راندمان، هزینه و توان خروجی انجام می‌شود. این نیمه‌هادی‌ها روی هیت‌سینک آلومینیومی با سیستم‌های دفع حرارت فعال یا غیرفعال نصب می‌شوند.</p>
 
-    <script src="script.js"></script>
-    <script>
-        // Disqus comments
-        (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://YOUR_DISQUS_SHORTNAME.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
+<p><strong>۴. بخش مبدل اولیه (Primary Conversion)</strong><br>
+در این مرحله، برق شبکه ۲۲۰ ولت AC پس از عبور از فیلتر و مدار PFC وارد مبدل اصلی می‌شود. در مبدل اولیه، موج AC به‌وسیله دیودها به DC تبدیل شده و در خازن بزرگ ذخیره می‌شود (معمولاً ۴۰۰V DC). سپس از طریق مدار سوئیچینگ، این ولتاژ به ترانسفورماتور ارسال و با فرکانس بالا (۵۰–۲۵۰ کیلوهرتز) مدوله می‌شود.</p>
+
+<p>توپولوژی‌های پرکاربرد در این بخش شامل Half-Bridge، Full-Bridge و LLC Resonant هستند. توپولوژی LLC به دلیل داشتن مدار تشدیدی، باعث کاهش تلفات کلیدزنی و افزایش راندمان تا بیش از ۹۴ درصد می‌شود. در این مدار، خازن تشدید و سیم‌پیچ اولیه در هماهنگی فرکانسی عمل می‌کنند تا سوئیچینگ در نقطه‌ی حداقل تلفات (Zero Voltage Switching) انجام شود.</p>
+
+<p><strong>۵. ترانسفورماتور ایزولاسیون</strong><br>
+ترانسفورماتور نقش جداسازی الکتریکی بین سمت اولیه و ثانویه را دارد و ولتاژ را براساس نسبت دورها کاهش می‌دهد. در فناوری‌های جدید از هسته‌های فریت با ترکیب Mn-Zn یا Ni-Zn استفاده می‌شود. ساخت ترانس شامل سیم‌پیچی دقیق با سیم لاکی، محاسبه نسبت دورها با توجه به ولتاژ خروجی و فرکانس کاری، و تست فواصل ایزولاسیون است.</p>
+
+<p>فرکانس کاری بالا باعث کوچک‌تر شدن ابعاد ترانس و کاهش وزن کلی پاور می‌شود. در طراحی صنعتی اغلب از نرم‌افزارهای شبیه‌سازی مانند LTspice و ANSYS Maxwell برای مدل‌سازی میدان مغناطیسی و بررسی پدیده‌های اشباع استفاده می‌شود.</p>
+
+<p><strong>۶. مبدل‌های ثانویه و تثبیت خروجی</strong><br>
+در سمت ثانویه، ولتاژ‌های خروجی با استفاده از دیودهای شاتکی سرعت بالا یا MOSFETهای synchronous rectification تولید می‌شوند. فناوری Synchronous Rectification راندمان را افزایش می‌دهد چون افت ولتاژ در هنگام هدایت کمتر از دیود معمولی است.</p>
+
+<p>ولتاژ خروجی توسط حلقه فیدبک و IC کنترل‌کننده مانند TL494، SG3525، یا کنترلرهای دیجیتال جدید DSP-based تثبیت می‌شود. این فیدبک، تغییرات بار را اندازه‌گیری و به مدار سوئیچینگ در سمت اولیه می‌فرستد تا ولتاژ خروجی در محدوده مجاز حفظ شود.</p>
+
+<p>در پاورهای مدرن، تنظیم جریان و ولتاژ به‌صورت دیجیتالی توسط پردازنده داخلی انجام می‌شود. استفاده از مبدل‌های DC-DC ثانویه برای کانال‌های ۳٫۳V و ۵V از جمله فناوری‌های رایج است که به کاهش نویز و افزایش پایداری کمک می‌کند.</p>
+
+<p><strong>۷. مدارهای محافظتی و ایمنی</strong><br>
+در تولید پاور، حفاظت الکتریکی بخش حیاتی طراحی محسوب می‌شود. مدارهای حفاظتی شامل OVP (حفاظت از ولتاژ زیاد)، UVP (افت ولتاژ)، OCP (حفاظت از جریان بیش از اندازه)، OTP (افزایش حرارت)، و SCP (شورت مدار) هستند.</p>
+
+<p>برای این کار از سنسورهای حرارتی NTC thermistor، سنسورهای جریان، و مقایسه‌گرهای دیجیتال استفاده می‌شود. مدار حفاظتی معمولاً توسط ICهایی مانند Supervisor ICs کنترل می‌شود که در لحظه تشخیص خطا، سیگنال خاموشی را به مدار سوئیچینگ ارسال می‌کنند. این تضمین می‌کند که قطعات داخلی و قطعات کامپیوتر دچار آسیب نشوند.</p>
+
+<p><strong>۸. فناوری مونتاژ و تولید صنعتی</strong><br>
+فرآیند تولید پاور شامل مراحل طراحی PCB چندلایه، ماشین‌کاری، لحیم‌کاری موجی، تست الکتریکی، و مونتاژ نهایی است. در کارخانه‌های مدرن، مونتاژ توسط ربات‌های SMT (Surface Mount Technology) انجام می‌شود. قطعات سطحی مانند مقاومت‌ها، ICها و ترانزیستورها بر روی بورد با دقت بالا نصب می‌گردند.</p>
+
+<p>در مرحله لحیم‌کاری موجی، بورد از حمام قلع عبور می‌کند تا تمام پایه‌ها به‌صورت یکنواخت لحیم شوند. پس از آن، بخش‌های مکانیکی مانند فیلتر EMI، هیت‌سینک، فن، و قاب فلزی مونتاژ می‌شوند. سپس تست‌های خودکار شامل Burn-In Test, Load Test, و Ripple Measurement با دستگاه‌های مخصوص انجام می‌گیرد تا عملکرد و پایداری ارزیابی شود.</p>
+
+<p><strong>۹. کنترل نویز و طراحی الکترومغناطیسی</strong><br>
+یکی از چالش‌های اصلی در تولید پاور، کاهش نویز الکترومغناطیسی (EMI/RFI) است. برای این منظور از فیلترهای LC در ورودی و خروجی، شیلد فلزی، و آرایش بهینه مسیرهای PCB استفاده می‌شود.</p>
+
+<p>طراحی مسیر زمین (Ground Plane) و فاصله بین مسیرهای ولتاژ بالا و سیگنال‌های کنترلی بر اساس استانداردهای CISPR و IEC60950 انجام می‌شود. در برخی مدل‌ها از ferrite beadها برای حذف نویز فرکانسی بالا استفاده می‌شود. کنترل EMI در منابع تغذیه کامپیوتر اهمیت فراوانی دارد، زیرا هرگونه پالس یا نویز می‌تواند بر عملکرد CPU و مادربرد تأثیر بگذارد.</p>
+
+<p><strong>۱۰. طراحی مکانیکی و دفع حرارت</strong><br>
+درون پاور، تراکم گرمای زیادی وجود دارد. سیستم خنک‌کننده شامل فن با کنترل هوشمند PWM و هیت‌سینک آلومینیومی است. در طراحی صنعتی، موقعیت اجزای حرارت‌زا با نرم‌افزار CFD تحلیل می‌شود تا جریان هوا بهینه گردد.</p>
+
+<p>در پاورهای رده‌بالا از فناوری Semi-passive Cooling استفاده می‌شود که فن فقط در شرایط دمای بالا فعال می‌شود. برای افزایش دوام، استفاده از یاتاقان‌های FDB یا Hydraulic در فن‌ها رایج است. هیت‌سینک‌ها با آلیاژ آلومینیوم ۶۰۶۳ اکسترود می‌شوند که رسانایی گرمایی بالا و وزن کم دارد.</p>
+
+<p><strong>۱۱. آزمون‌ها و کنترل کیفیت</strong><br>
+هر پاور تولیدشده پیش از بسته‌بندی باید چند مرحله تست را بگذراند:</p>
+
+<div class="tech-note">
+• <strong>Burn-In Test:</strong> کارکرد طولانی مدت در ۱۰۰٪ بار برای ۸ تا ۲۴ ساعت جهت آشکارسازی نقص‌ها.<br>
+• <strong>Efficiency Test:</strong> اندازه‌گیری راندمان در بارهای مختلف (۲۰٪، ۵۰٪، ۱۰۰٪) برای تعیین کلاس استاندارد مانند 80 Plus Bronze/Gold/Platinum.<br>
+• <strong>Ripple and Noise Test:</strong> بررسی نوسانات خروجی با اسیلوسکوپ تا حداکثر ۵۰ میلی‌ولت در کانال‌های دیجیتال.<br>
+• <strong>Temperature & Acoustic Test:</strong> اندازه‌گیری حرارت قطعات و صدای فن تحت بار کامل.
+</div>
+
+<p>نتایج تست در پایگاه داده ثبت شده و قطعه‌های ناسازگار از خط تولید حذف می‌شوند.</p>
+
+<p><strong>۱۲. استانداردها و گواهی‌های کیفیت</strong><br>
+پاور کامپیوتر باید مطابق استانداردهای جهانی طراحی و تولید شود:</p>
+
+<div class="highlight-stat">
+    ✔ <strong>ATX Specification</strong> برای ساختار الکتریکی و کانکتورها.<br>
+    ✔ <strong>IEC 62368-1</strong> برای ایمنی الکتریکی.<br>
+    ✔ <strong>80 PLUS Certification</strong> برای راندمان انرژی.<br>
+    ✔ <strong>RoHS و REACH</strong> برای محدودیت مواد سمی و فلزات سنگین.
+</div>
+
+<p>برندهای معتبر مجموعه‌ای از تست‌های سازگاری (Compatibility Testing) را نیز با مادربردها و پردازنده‌های مختلف انجام می‌دهند تا اطمینان حاصل شود در شرایط واقعی عملکرد پایدار دارند.</p>
+
+<p><strong>۱۳. فناوری‌های هوشمند و دیجیتالی در پاورهای مدرن</strong><br>
+پاورهای جدید از تراشه‌های کنترل دیجیتال بهره می‌برند که قابلیت مانیتورینگ لحظه‌ای را دارند. با استفاده از میکروکنترلرهای داخلی و چیپ‌های ارتباطی مانند USB Interface یا PMBus Protocol اطلاعات دما، جریان و ولتاژ قابل گزارش به سیستم است.</p>
+
+<p>در برخی مدل‌ها نرم‌افزار اختصاصی امکان کنترل سرعت فن، مشاهده مصرف انرژی و تنظیم پروفایل‌های عملکرد را فراهم می‌کند. این ادغام هوشمند باعث شده پاور از یک دستگاه ساده تبدیل به جزئی از سیستم پایش حرارتی و پرفورمنس کامپیوتر شود.</p>
+  </div>
+  <div class="doc-footer">
+    <span>طراحی توسط محمد امین چینا</span>
+  </div>
+</div>
+
+<script>
+  // اضافه کردن کلاس به پاراگراف‌هایی که با عدد و نقطه شروع می‌شوند تا تیتروار دیده شوند (بدون تغییر دستی محتوا)
+  (function styleNumberedParagraphs() {
+    const paragraphs = document.querySelectorAll('#tech-content p');
+    paragraphs.forEach(p => {
+      const text = p.innerText.trim();
+      // الگوی شروع با عدد فارسی/انگلیسی و سپس نقطه یا ممیز و فاصله
+      if (/^[\d۱-۹]+\.\s/.test(text) || /^[\d۱-۹]+\./.test(text) || /^[۰-۹]+\./.test(text)) {
+        p.setAttribute('data-is-title', 'true');
+        // همچنین اطمینان از bold شدن کل عنوان
+        if (!p.querySelector('strong') && !p.querySelector('b')) {
+          // اگر داخل آن تگ strong نبود یک ساختار سبک اضافه می‌کنیم
+          const firstWord = text.split(' ').slice(0,2).join(' ');
+          if(firstWord.length < 50) {
+             // کاری نمی‌کنیم، فقط استایل CSS کافیست
+          }
+        }
+      }
+    });
+  })();
+</script>
 </body>
 </html>
